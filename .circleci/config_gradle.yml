@@ -8,8 +8,7 @@ jobs:
     executor: gradle/default
     steps:
       - checkout
-      - gradle/run:
-          command: version
+      - run: gradle --version
 
 workflows:
   build:
