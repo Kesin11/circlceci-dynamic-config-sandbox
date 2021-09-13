@@ -21,9 +21,13 @@ jobs:
           configuration_path: .circleci/config_gradle.yml
 
 workflows:
-  node:
+  setup:
     jobs:
-      - setup_node
-  java:
-    jobs:
-      - setup_gradle
+      - setup_node:
+          filters:
+            branches:
+              only: main
+      - setup_gradle:
+          filters:
+            branches:
+              ignore: main
