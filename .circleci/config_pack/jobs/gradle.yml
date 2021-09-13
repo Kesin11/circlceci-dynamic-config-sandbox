@@ -1,0 +1,4 @@
+executor: gradle/default
+steps:
+  - checkout
+  - run: gradle --version

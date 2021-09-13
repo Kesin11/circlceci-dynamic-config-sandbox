@@ -1,0 +1,9 @@
+executors:
+  default:
+    docker:
+      - image: cimg/base:stable
+
+commands:
+  echo_foo:
+    steps:
+      - run: echo "foo"

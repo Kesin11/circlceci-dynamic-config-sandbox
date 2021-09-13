@@ -1,0 +1,18 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7.0
+  gradle: circleci/gradle@2.2.0
+
+jobs:
+  my_job:
+    executor: my_orb/default
+    steps:
+      - my_orb/echo_foo
+
+workflows:
+  build:
+    jobs:
+      - node
+      - gradle
+      - my_job

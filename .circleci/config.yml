@@ -4,30 +4,20 @@ version: 2.1
 setup: true
 
 orbs:
+  cli: circleci/circleci-cli@0.1.9
   continuation: circleci/continuation@0.2.0
 
 jobs:
-  setup_node:
+  setup:
     executor: continuation/default
     steps:
       - checkout
+      - cli/install
+      - run: circleci config pack .circleci/config_pack > .circleci/packed.yml
       - continuation/continue:
-          configuration_path: .circleci/config_node.yml
-  setup_gradle:
-    executor: continuation/default
-    steps:
-      - checkout
-      - continuation/continue:
-          configuration_path: .circleci/config_gradle.yml
+          configuration_path: .circleci/packed.yml
 
 workflows:
   setup:
     jobs:
-      - setup_node:
-          filters:
-            branches:
-              only: main
-      - setup_gradle:
-          filters:
-            branches:
-              ignore: main
+      - setup
