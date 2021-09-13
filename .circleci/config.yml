@@ -13,7 +13,7 @@ jobs:
       - checkout
       - continuation/continue:
           configuration_path: .circleci/config_node.yml
-  setup_java:
+  setup_gradle:
     executor: continuation/default
     steps:
       - checkout
