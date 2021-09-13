@@ -1,0 +1,17 @@
+version: 2.1
+
+orbs:
+  gradle: circleci/gradle@2.2.0
+
+jobs:
+  gradle:
+    executor: gradle/default
+    steps:
+      - checkout
+      - gradle/run:
+          command: version
+
+workflows:
+  build:
+    jobs:
+      - gradle
