@@ -8,7 +8,7 @@ orbs:
   continuation: circleci/continuation@0.2.0
 
 jobs:
-  setup:
+  pack:
     executor: continuation/default
     steps:
       - checkout
@@ -16,8 +16,21 @@ jobs:
       - run: circleci config pack .circleci/config_pack > .circleci/packed.yml
       - continuation/continue:
           configuration_path: .circleci/packed.yml
+  yq:
+    executor: continuation/default
+    steps:
+      - checkout
+      - run:
+          name: Install yq
+          command: |
+            curl -Lo yq https://github.com/mikefarah/yq/releases/download/v4.12.2/yq_linux_amd64
+            chmod +x yq
+      - run: yq ea '. as $item ireduce ({}; . * $item )' .circleci/config_yq/config_* > .circleci/merged.yml
+      - continuation/continue:
+          configuration_path: .circleci/merged.yml
 
 workflows:
   setup:
     jobs:
-      - setup
+      # - pack
+      - yq
